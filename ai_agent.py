@@ -1,4 +1,12 @@
 import json
+import os
+from dotenv import load_dotenv
+from google import genai
+from google.genai import types
+
+load_dotenv()
+
+
 
 class AIReportGenerator:
     def __init__(self,report_payload:dict):
@@ -13,15 +21,29 @@ class AIReportGenerator:
 
     def build_llm_prompt(self) -> dict:
         if self.needs_ai_analysis():
-             critical_json_str = json.dumps(self.report_payload["critical_cost_centers"], indent=2)
-             total_var = self.report_payload["total_revenue_variance"]
-             user_prompt_text = f"Total Revenue Variance: {total_var}\nCritical Cost Centers:\n{critical_json_str}"
-             llm_prompt = {
-                 "call_llm":True,
-                 "system_prompt" : "You're a senior FP&A, you're given the information regarding cost center that are flagged as critical. do not hallucinate and do not make up numbers, based on the given analyze the critical center",
-                 "user_prompt": user_prompt_text
-                 }
-             return llm_prompt
+            
+            my_key = os.getenv("GEMINI_API_KEY")
+            if my_key is None:
+                raise ValueError ("API Key is missing! Check your .env file.")
+
+            client = genai.Client(api_key=my_key)
+            critical_json_str = json.dumps(self.report_payload["critical_cost_centers"], indent=2)
+            total_var = self.report_payload["total_revenue_variance"]
+            user_prompt_text = f"Total Revenue Variance: {total_var}\nCritical Cost Centers:\n{critical_json_str}"
+            system_prompt_str = "You're a senior FP&A, you're given the information regarding cost center that are flagged as critical. do not hallucinate and do not make up numbers, based on the given analyze the critical center"
+            response = client.models.generate_content(
+                model= "gemini-3.8-flash",
+                contents= user_prompt_text,
+                config = types.GenerateContentConfig(
+                    system_instruction= system_prompt_str,
+                    temperature= 0.2
+                ),
+            )
+            ai_answer = response.text
+            return {"call_llm": True,
+                    "ai_analysis" : ai_answer
+                    }
+
         else:
             return {"call_llm": False, "message": "All cost centers are on track. No AI analysis required."} 
 
