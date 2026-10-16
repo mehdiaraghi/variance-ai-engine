@@ -1,5 +1,5 @@
 from models import Variance
-
+import json
 
 class VarianceProcessor:
     def __init__(self,data:list[dict]) :
@@ -48,6 +48,11 @@ class VarianceProcessor:
             "critical_cost_centers" : self.critical_situation(),
             "error_logs" : self.fail_records
         }    
+
+    def report_payload (self) -> dict:
+        payload_str = json.dumps(self.generate_report_payload(), indent=2)
+
+        return payload_str
 
 
 

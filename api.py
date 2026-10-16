@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from processor import VarianceProcessor
-
+from ai_agent import AIReportGenerator
 
 app = FastAPI()
 
@@ -9,12 +9,13 @@ app = FastAPI()
 def check_system_health() -> dict:
     return {"status": "healthy", "message": "Mehdi's server is alive!"}
 
-@app.post("/sum-numbers")
-def calculate_sum(items: list[int]) -> dict:
-    total = sum(items)
-    return {"total_sum": total}
 
 @app.post("/variance-report")
 def variance_process(items : list[dict]) ->dict:
-    obj = VarianceProcessor(items)
-    return obj.generate_report_payload()
+    processor = VarianceProcessor(items)
+    payload = processor.generate_report_payload()
+    ai_gen = AIReportGenerator(payload)
+    payload["ai_agent_output"] = ai_gen.build_llm_prompt()
+    return payload
+
+
