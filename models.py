@@ -1,3 +1,6 @@
+from pydantic import BaseModel
+
+
 class Variance:
     def __init__(self,cost_center:str,time_period:str,
                  revenue_actual: float , revenue_forecast:float, 
@@ -47,3 +50,14 @@ class Variance:
         'revenue_variance': self.absolute_variance(),
         'revenue_percent': self.percent_variance(),
         'revenue_status': self.flag_status()}
+
+
+class CenterInsight(BaseModel):
+    cost_center : str
+    primary_driver : str
+    explanation : str
+    recommended_action :str
+
+class AIReportSchema(BaseModel):
+    portfoli_summary : str
+    critical_insight : list[CenterInsight]

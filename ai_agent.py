@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+from models import AIReportSchema
 
 load_dotenv()
 
@@ -36,15 +37,18 @@ class AIReportGenerator:
                 contents= user_prompt_text,
                 config = types.GenerateContentConfig(
                     system_instruction= system_prompt_str,
-                    temperature= 0.2
+                    temperature= 0.2,
+                    response_mime_type="application/json",
+                    response_schema= AIReportSchema
                 ),
             )
-            ai_answer = response.text
+            ai_answer = json.loads(response.text)
             return {"call_llm": True,
                     "ai_analysis" : ai_answer
                     }
 
         else:
-            return {"call_llm": False, "message": "All cost centers are on track. No AI analysis required."} 
+            return {"call_llm": False, 
+                    "message": "All cost centers are on track. No AI analysis required."} 
 
 

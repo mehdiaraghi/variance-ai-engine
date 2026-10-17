@@ -49,11 +49,6 @@ class VarianceProcessor:
             "error_logs" : self.fail_records
         }    
 
-    def report_payload (self) -> dict:
-        payload_str = json.dumps(self.generate_report_payload(), indent=2)
-
-        return payload_str
-
 
 
 
