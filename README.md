@@ -1,6 +1,6 @@
 # Autonomous Financial Variance Engine & AI Analyst
 
-An enterprise-grade analytical microservice built with **FastAPI**, **Pydantic V2**, and **Google Gemini 2.5 Flash**. The service audits financial telemetry, isolates bad data entries without pipeline failure, calculates deterministic variances, and generates machine-readable, structured executive insights for underperforming cost centers.
+An enterprise-grade analytical microservice built with **FastAPI**, **Pydantic V2**, and **Google Gemini 3.8Flash**. The service audits financial telemetry, isolates bad data entries without pipeline failure, calculates deterministic variances, and generates machine-readable, structured executive insights for underperforming cost centers.
 
 ---
 
