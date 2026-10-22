@@ -1,6 +1,6 @@
 # Autonomous Financial Variance Engine & AI Analyst
 
-An enterprise-grade analytical microservice built with **FastAPI**, **Pydantic V2**, and **Google Gemini 3.8Flash**. The service audits financial telemetry, isolates bad data entries without pipeline failure, calculates deterministic variances, and generates machine-readable, structured executive insights for underperforming cost centers.
+An enterprise-grade analytical microservice built with **FastAPI**, **Pydantic V2**, and **Google Gemini 3.8 Flash**. The service audits financial telemetry, isolates bad data entries without pipeline failure, calculates deterministic variances, and generates machine-readable, structured executive insights for underperforming cost centers.
 
 ---
 
@@ -72,7 +72,7 @@ Variance/
 * **Language:** Python 3.12 (Object-Oriented Programming, Strict Type Hinting)
 * **API Framework:** FastAPI, Uvicorn
 * **Data Validation & Schemas:** Pydantic V2
-* **Generative AI:** Google GenAI SDK (`gemini-2.5-flash`)
+* **Generative AI:** Google GenAI SDK (`gemini-3.8-flash`)
 * **Containerization:** Docker
 * **Configuration & Security:** Python-Dotenv, Git
 
@@ -88,7 +88,7 @@ Variance/
 ### 2. Local Setup
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/variance-ai-engine.git
+git clone https://github.com/mehdiaraghi/variance-ai-engine.git
 cd variance-ai-engine
 
 # Create and activate virtual environment
